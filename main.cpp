@@ -112,25 +112,57 @@ void printMultiplicationTable() {
 
 double discriminant(double a, double b, double c) {
     // BEGIN: 3a
-    return 0;
+    return pow(b, 2) - 4 * a * c;
     // END: 3a
 }
 
 void printRealRoots(double a, double b, double c) {
     // BEGIN: 3b
+    if (discriminant(a, b, c) < 0) {
+        cout << "No real roots :(" << endl;
+        return;
+    }
 
+    if (discriminant(a, b, c) == 0) {
+        double root = -b / (2 * a);
+        cout << "One root: " << to_string(root) << endl;
+        return;
+    }
+
+    double rootA = (-b - sqrt(discriminant(a, b, c))) / (2 * a);
+    double rootB = (-b + sqrt(discriminant(a, b, c))) / (2 * a);
+
+    cout << "Roots are " << rootA << " and " << rootB << endl;
     // END: 3b
 }
 
 void solveQuadraticEquations() {
     // BEGIN: 3c
-
+    double a = inputDouble();
+    double b = inputDouble();
+    double c = inputDouble();
+    printRealRoots(a, b, c);
     // END: 3c
 }
 
 void pythagoras() {
     // BEGIN: 4a
     // Alle deloppgaver i 4 skal løses her
+    AnimationWindow win{100, 100, 600, 600, "Pythagoras"};
+
+    win.draw_triangle(Point{200, 400}, Point{400, 400}, Point{400, 200},
+                      Color::red);
+
+    win.draw_quad(Point{200, 400}, Point{400, 400}, Point{400, 600},
+                  Point{200, 600}, Color::green);
+
+    win.draw_quad(Point{400, 400}, Point{600, 400}, Point{600, 200},
+                  Point{400, 200}, Color::blue);
+
+    win.draw_quad(Point{200, 400}, Point{400, 200}, Point{175, 50},
+                  Point{50, 250}, Color::orange);
+
+    win.wait_for_close();
     // END: 4a
 }
 
@@ -156,6 +188,8 @@ int main() {
     // Her kan du teste funksjonene dine ved hjelp av menysystem som beskrevet.
     // NB: Denne delen av koden blir IKKE automatisk rettet.
 
+    // pythagoras();
+
     while (true) {
         cout << endl;
         cout << "Velg funksjon:" << endl;
@@ -169,7 +203,8 @@ int main() {
         cout << "7) inputDouble" << endl;
         cout << "8) convertNOKtoEUR" << endl;
         cout << "9) printMultiplicationTable" << endl;
-        cout << "Angi valg (0-9): ";
+        cout << "10) solveQuadraticEquations" << endl;
+        cout << "Angi valg (0-10): ";
 
         int choise;
         cin >> choise;
@@ -213,6 +248,9 @@ int main() {
                 break;
             case 9:
                 printMultiplicationTable();
+                break;
+            case 10:
+                solveQuadraticEquations();
                 break;
             default:
                 throw runtime_error(to_string(choise) + " not implemented");
