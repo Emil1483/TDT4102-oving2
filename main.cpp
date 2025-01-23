@@ -168,13 +168,25 @@ void pythagoras() {
 
 vector<int> calculateBalance(int amount, int rate, int years) {
     // BEGIN: 5a
-    return {};
+    vector<int> result(years);
+
+    double rateDouble = static_cast<double>(rate);
+    double amountDouble = static_cast<double>(amount);
+
+    for (int i = 0; i < years; i++) {
+        result[i] = round(amountDouble * pow(1 + rateDouble / 100, i));
+    }
+
+    return result;
     // END: 5a
 }
 
 void printBalance(vector<int> balanceVec) {
     // BEGIN: 5b
-
+    cout << setw(10) << "Year" << setw(10) << "Saldo" << endl;
+    for (int i = 0; i < balanceVec.size(); i++) {
+        cout << setw(10) << i << setw(10) << balanceVec[i] << endl;
+    }
     // END: 5b
 }
 
@@ -190,6 +202,11 @@ int main() {
 
     // pythagoras();
 
+    vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    for (int i = 0; i < v.size(); i++) {
+        cout << v.at(i) << endl;
+    }
+
     while (true) {
         cout << endl;
         cout << "Velg funksjon:" << endl;
@@ -204,7 +221,8 @@ int main() {
         cout << "8) convertNOKtoEUR" << endl;
         cout << "9) printMultiplicationTable" << endl;
         cout << "10) solveQuadraticEquations" << endl;
-        cout << "Angi valg (0-10): ";
+        cout << "11) calculateBalance" << endl;
+        cout << "Angi valg (0-11): ";
 
         int choise;
         cin >> choise;
@@ -251,6 +269,9 @@ int main() {
                 break;
             case 10:
                 solveQuadraticEquations();
+                break;
+            case 11:
+                printBalance(calculateBalance(5000, 2, 10));
                 break;
             default:
                 throw runtime_error(to_string(choise) + " not implemented");
